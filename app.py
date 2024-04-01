@@ -1,3 +1,5 @@
+# https://claude.ai/chat/9771b639-b9b7-40c5-b8c0-70c858e97c84 여기 링크 참고해서 진행.
+
 import streamlit as st
 from database.db_operations import create_prompt, get_prompts_by_category, create_test_result, get_test_results_by_prompt
 from openai import OpenAI
@@ -12,8 +14,6 @@ except:
   client = AsyncOpenAI()
 
 model_list = ["gpt-3.5-turbo", "gpt-4", "gpt-4-0125-preview"]
-
-# intro()
 
 # 이메일 생성 페이지
 def gen_email():
@@ -48,10 +48,7 @@ def gen_email():
                 # 사용자로부터 숫자 입력받기
             st.text("Parameters")
             with st.container(border=True):
-                model = st.selectbox("GPT Model", model_list,
-   index=None,
-   placeholder="gpt-4",
-)
+                model = st.selectbox("GPT Model", model_list, index=None, placeholder="gpt-4")
                 temperature = st.slider('Temperature', 0.0, 1.0, 0.5, step=0.1)
                 top_p = st.slider('Top_P', 0.0, 1.0, 1.0, step=0.1)
                 max_tokens = st.slider('Maximum Length', 0, 4000, 2000, step=100)
@@ -82,8 +79,7 @@ def gen_email():
         index=None,
         placeholder="English"
 )
-        result = st.write('You selected:', sender, reciepent, purpose, additional, tone, language)
-
+ 
         with st.sidebar:
             # 얘들을 입력 항목들로 채워주자.
             st.divider()
@@ -94,6 +90,7 @@ def gen_email():
             vote_3 = st.checkbox("3번 결과")
             vote_4 = st.checkbox("4번 결과")
             vote = st.button("vote")
+            # 버튼을 누르면 email 결과물에 대한 투표 결과가 저장 됨. (csv에 저장하면 될 듯.)
 
         async def generate_email(system_prompt, user_prompt, model, temperature, topp, max_tokens):
             stream = await client.chat.completions.create(
